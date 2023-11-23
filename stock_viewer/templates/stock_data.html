@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Data</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Fetch and view Stock Data</h1>
+    <input type="text" id="stockUrl" placeholder="Enter the stock url "> <br/> <br/>
+    <input type="text" id="apiKey" placeholder="Enter your API key"> &nbsp; 
+    <button id="getData">Fetch Data</button>
+    <div id="stockData"></div>
+
+    <script>
+        $(document).ready(function(){
+            $('#getData').click(function(){
+                var url = $('#stockUrl').val();
+                var apiKey = $('#apiKey').val();
+                
+                $.ajax({
+                    url: '/stock_data/',
+                    type: 'GET',
+                    data: {
+                        'api_url': url,
+                        'apikey': apiKey 
+                    },
+                    success: function(response){
+                        $('#stockData').html(JSON.stringify(response));
+                    },
+                    error: function(error){
+                        console.log(error);
+                        $('#stockData').html('Failed to fetch data');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
